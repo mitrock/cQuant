@@ -78,3 +78,13 @@ for (i in sp_list){
   }
   write.csv(df_i, paste0("spot_",i,".csv"), row.names=FALSE)
 }
+
+#Bonus 1
+meansum2<-meansum %>% mutate(date = make_date(Year, Month))
+meansumHB<-meansum2[!grepl('LZ_', meansum2$SettlementPoint),]
+meansumLZ<-meansum2[!grepl('HB_', meansum2$SettlementPoint),]
+ggplot(data = meansumHB, aes(x=meansumHB$date, y=meansumHB$Price)) + geom_line(aes(color=meansumHB$SettlementPoint))
+ggsave("SettlementHubAveragePriceByMonth.png",width = 12,height = 7)
+
+ggplot(data = meansumLZ, aes(x=meansumLZ$date, y=meansumLZ$Price)) + geom_line(aes(color=meansumLZ$SettlementPoint))
+ggsave("LoadZoneAveragePriceByMonth.png",width = 12,height = 7)
